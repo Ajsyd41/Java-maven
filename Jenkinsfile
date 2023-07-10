@@ -37,7 +37,8 @@ pipeline
      }
          stage('SonarQube analysis') {
       steps {
-             bat 'sonar:sonar'
+            bat 'mvn clean install'
+            bat  'mvn sonar:sonar'
       //    script {
       //     scannerHome = tool 'sonarqube_scanner'
       //    }
