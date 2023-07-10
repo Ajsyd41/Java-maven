@@ -37,12 +37,13 @@ pipeline
      }
          stage('SonarQube analysis') {
       steps {
-         script {
-          scannerHome = tool 'sonarqube_scanner'
-         }
-        withSonarQubeEnv('sonar-api') {
-          bat "${scannerHome}/sonar-scanner"
-        }
+             bat 'sonar:sonar'
+      //    script {
+      //     scannerHome = tool 'sonarqube_scanner'
+      //    }
+      //   withSonarQubeEnv('sonar-api') {
+      //     bat "${scannerHome}/sonar-scanner"
+      //   }
       }
     }
  }
