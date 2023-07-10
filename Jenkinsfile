@@ -37,8 +37,11 @@ pipeline
      }
          stage('SonarQube analysis') {
       steps {
+          withSonarQubeEnv('sonar-api') {
             bat 'mvn clean install'
             bat  'mvn sonar:sonar'
+        }
+            
       //    script {
       //     scannerHome = tool 'sonarqube_scanner'
       //    }
