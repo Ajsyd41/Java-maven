@@ -17,7 +17,7 @@ pipeline
      {
         steps
         {
-            git branch: 'main', credentialsId: 'GithubID', url: 'https://github.com/Ajsyd41/jenkinsRepo.git'
+            checkout scm
         }
      }
     stage('Unit Test')
