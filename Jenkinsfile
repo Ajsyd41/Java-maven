@@ -14,6 +14,7 @@ pipeline
     options
     {
         timestamps()
+        timeout(time: 20,unit: 'MINUTES')
     }
  stages
     {
@@ -28,23 +29,26 @@ pipeline
      {
         steps
         {
-            bat 'mvn test'
+            bat 'mvn clean package'
             junit '**/target/surefire-reports/TEST-*.xml'
         }
      }
-     stage('Maven Build')
+      stage('SonarQube analysis') {
+        steps {
+           withSonarQubeEnv('sonar-api') {
+               bat 'mvn clean package'
+               bat  'mvn sonar:sonar'
+        }
+      }
+       stage('Integration Test')
      {
         steps
         {
-             bat 'mvn clean install'   
+            bat 'mvn clean package -Dsurefire.skip=true failsafe:integration-test'
+            junit '**/target/failsafe-reports/*.xml'
         }
      }
-         stage('SonarQube analysis') {
-      steps {
-          withSonarQubeEnv('sonar-api') {
-            bat 'mvn clean install'
-            bat  'mvn sonar:sonar'
-        }
+        
             
       //    script {
       //     scannerHome = tool 'sonarqube_scanner'
@@ -54,7 +58,6 @@ pipeline
       //   }
       }
     }
- }
 }
  
 
