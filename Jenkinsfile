@@ -7,28 +7,26 @@ pipeline
 
     agent any
 
-    tools
-    {
+    tools{
+        
         maven 'Maven'
     }
-    options
-    {
+    options{
+
         timestamps()
         timeout(time: 20,unit: 'MINUTES')
     }
  stages
     {
-     stage('SCM Checkout')
-     {
-        steps
-        {
+     stage('SCM Checkout'){
+        steps{
+
             checkout scm
         }
      }
-    stage('Unit Test')
-     {
-        steps
-        {
+    stage('Unit Test'){
+        steps{
+
             bat 'mvn clean package'
             junit '**/target/surefire-reports/TEST-*.xml'
         }
@@ -38,12 +36,12 @@ pipeline
            withSonarQubeEnv('sonar-api') {
                bat 'mvn clean package'
                bat  'mvn sonar:sonar'
+             }
         }
-      }
-       stage('Integration Test')
-     {
-        steps
-        {
+     }
+       stage('Integration Test'){
+        steps{
+
             bat 'mvn clean package -Dsurefire.skip=true failsafe:integration-test'
             junit '**/target/failsafe-reports/*.xml'
         }
@@ -57,8 +55,8 @@ pipeline
       //     bat "${scannerHome}/sonar-scanner"
       //   }
       }
-    }
 }
+
  
 
 
