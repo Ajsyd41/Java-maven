@@ -8,7 +8,7 @@ pipeline
     agent any
 
     tools{
-        
+
         maven 'Maven'
     }
     options{
@@ -27,14 +27,14 @@ pipeline
     stage('Unit Test'){
         steps{
 
-            bat 'mvn clean package'
+            bat 'mvn test'
             junit '**/target/surefire-reports/TEST-*.xml'
         }
      }
       stage('SonarQube analysis') {
         steps {
            withSonarQubeEnv('sonar-api') {
-               bat 'mvn clean package'
+            //    bat 'mvn clean package'
                bat  'mvn sonar:sonar'
              }
         }
