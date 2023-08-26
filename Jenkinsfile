@@ -39,19 +39,19 @@ pipeline
 
       }
     }
-      stage('SonarQube analysis') {
-        steps {
-           withSonarQubeEnv('sonar-api') {
-            //    bat 'mvn clean package'
-               bat  'mvn sonar:sonar'
-             }
-        }
-     }
+    //   stage('SonarQube analysis') {
+    //     steps {
+    //        withSonarQubeEnv('sonar-api') {
+    //         //    bat 'mvn clean package'
+    //            bat  'mvn sonar:sonar'
+    //          }
+    //     }
+    //  }
 
     stage('Deploy to Nexus') { 
       steps {
         echo 'Deploy Appplication...'
-        bat 'mvn deploy -Dmaven.test.skip=true -Dmaven.install.skip=true'
+        bat 'mvn clean deploy -Dmaven.test.skip=true -Dmaven.install.skip=true'
       }
     }
             
