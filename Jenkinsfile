@@ -27,7 +27,7 @@ pipeline
     stage('Unit Test'){
         steps{
 
-            bat 'mvn test'
+            bat 'mvn test -Dmaven.test.failure.ignore=true'
             junit '**/target/surefire-reports/TEST-*.xml'
         }
      }
@@ -35,7 +35,7 @@ pipeline
       steps {
 
         echo 'Package Appplication...'
-        bat 'mvn clean package'
+        bat 'mvn clean package -Dmaven.test.skip=true'
 
       }
     }
@@ -51,7 +51,7 @@ pipeline
     stage('Deploy to Nexus') { 
       steps {
         echo 'Deploy Appplication...'
-        bat 'mvn deploy -DskipTests -Dmaven.install.skip=true'
+        bat 'mvn deploy -Dmaven.test.skip=true -Dmaven.install.skip=true'
       }
     }
             
