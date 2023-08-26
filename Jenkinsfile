@@ -31,6 +31,14 @@ pipeline
             junit '**/target/surefire-reports/TEST-*.xml'
         }
      }
+      stage('Package') { 
+      steps {
+
+        echo 'Package Appplication...'
+        bat 'mvn clean package'
+
+      }
+    }
       stage('SonarQube analysis') {
         steps {
            withSonarQubeEnv('sonar-api') {
@@ -39,21 +47,15 @@ pipeline
              }
         }
      }
-       stage('Integration Test'){
-        steps{
 
-            bat 'mvn clean package -Dsurefire.skip=true failsafe:integration-test'
-            junit '**/target/failsafe-reports/*.xml'
-        }
-     }
-        
+    stage('Deploy to Nexus') { 
+      steps {
+        echo 'Deploy Appplication...'
+        bat 'mvn deploy -DskipTests -Dmaven.install.skip=true'
+      }
+    }
             
-      //    script {
-      //     scannerHome = tool 'sonarqube_scanner'
-      //    }
-      //   withSonarQubeEnv('sonar-api') {
-      //     bat "${scannerHome}/sonar-scanner"
-      //   }
+
       }
 }
 

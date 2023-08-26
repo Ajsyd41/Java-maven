@@ -444,4 +444,11 @@
     </profile>
   </profiles>
 
+<distributionManagement>
+    	<snapshotRepository>
+     		 <id>nexus-snapshots</id>
+    		 <url>http://nexus-repo.cloudgaurdtechnologies.com:8081/repository/maven-snapshots/</url>
+    	</snapshotRepository>
+</distributionManagement>
+
 </project>
