@@ -1,0 +1,93 @@
+pipeline
+{
+
+    agent any
+
+ stages
+    {
+     stage('SCM Checkout')
+     {
+        steps
+        {
+            git branch: 'main', credentialsId: 'GithubID', url: 'https://github.com/Ajsyd41/jenkinsRepo.git'
+        }
+     }
+    stage('Unit Test')
+     {
+        steps
+        {
+            script
+            {
+                bat 'mvn test'
+                junit '**/target/surefire-reports/TEST-*.xml'
+            }
+          
+        }
+     }
+
+     stage('Maven Build')
+     {
+        steps
+        {
+            script
+            {
+             bat 'mvn clean package'   
+            }
+          
+        }
+     }
+    stage('Sonar Analysis')
+     {
+        steps
+        {
+            script
+            {
+             withSonarQubeEnv(credentialsId: 'sonar-api') {
+                bat 'mvn sonar:sonar'
+            }
+        }
+     }
+     }
+     stage("Quality Gate"){
+        timeout(time: 1, unit: 'HOURS') { 
+           def qg = waitForQualityGate() 
+              if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+           }
+       }
+     }
+    //   stage('DockerImage Build')
+    //  {
+    //     steps
+    //     {
+    //         script
+    //         {
+    //         //   DockerImage= bat "docker build -f Dockerfile -t ajsyd141/jenk1ns:${BUILD_NUMBER} ."
+    //             DockerImage= bat "docker pull hello-world:latest"
+                
+    //         }
+    //     }
+    //  }
+
+    //  stage('Docker Image Push')
+    //  {
+    //     steps
+    //     {
+    //         script
+    //         {
+    //             withDockerRegistry(credentialsId: 'DockerID', url: 'https://registry.hub.docker.com')
+    //             {
+    //              bat "docker push ajsyd141/jenk1ns:${BUILD_NUMBER}"
+    //             }
+    //         }
+    //     }
+    //  }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+ }
+
+
