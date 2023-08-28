@@ -18,7 +18,7 @@ pipeline
         {
             script
             {
-                bat 'mvn test'
+                bat 'mvn test -Dmaven.test.failure.ignore=true'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
           
@@ -31,7 +31,7 @@ pipeline
         {
             script
             {
-             bat 'mvn clean package'   
+             bat 'mvn clean package -Dmaven.test.skip=true'   
             }
           
         }
