@@ -1,0 +1,56 @@
+pipeline {
+  agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+      }
+	  options{
+
+        timestamps()
+        timeout(time: 20,unit: 'MINUTES')
+    }
+  stages {
+
+   stage('SCM Checkout'){
+        steps{
+
+            checkout scm
+        }
+     }
+	 
+ 	stage('Test') { 
+      steps {
+
+        echo 'Test Appplication...' 
+         mvn 'clean test'
+         junit '**/target/surefire-reports/TEST-*.xml'
+
+      }
+    }
+     stage('Package') { 
+      steps {
+
+        echo 'Package Appplication...'
+        mvn 'clean package -Dmaven.test.skip=true'
+
+      }
+    }
+    stage('SonarQube analysis') {
+        steps {
+           withSonarQubeEnv('sonar-api') {
+
+               mvn 'org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+
+             }
+        }
+     }
+	 stage('SCA analysis') {
+        steps {
+           withSonarQubeEnv('sonar-api') {
+
+               mvn 'org.cyclonedx:cyclonedx-maven-plugin:2.7.9:makeAggregateBom'
+
+             }
+        }
+     }
+	
+  }
+}
