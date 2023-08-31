@@ -13,7 +13,8 @@ pipeline
 	}
 	  environment {
 
-	  GRP_ID=sh(returnStdout: true, script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q').trim()
+    def version = sh (script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true)
+	//   GRP_ID=sh(returnStdout: true, script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q').trim()
 
 	  }
  stages
@@ -28,7 +29,7 @@ pipeline
         steps{
 			echo '============================================================================'
 			
-			echo "${env.GRP_ID}"
+			echo "${env.version}"
         }
      }
 
