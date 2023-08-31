@@ -15,7 +15,7 @@ pipeline
     indev='-dev'
     def version = sh (script: 'mvn help:evaluate -Dexpression=parent.version -q -DforceStdout', returnStdout: true)
 
-    fin=${version}${indev}
+    fin="${version}${indev}"
 	  }
  stages
     {
