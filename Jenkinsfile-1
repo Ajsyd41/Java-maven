@@ -5,13 +5,6 @@ pipeline
 
  stages
     {
-     stage('SCM Checkout')
-     {
-        steps
-        {
-           checkout scm
-        }
-     }
     stage('Unit Test')
      {
         steps
@@ -25,12 +18,10 @@ pipeline
         }
      }
 
-     stage('Maven Build')
-     {
+     stage('Maven Build'){
         steps
         {
-            script
-            {
+          
              bat 'mvn clean package -Dmaven.test.skip=true'   
             }
           
