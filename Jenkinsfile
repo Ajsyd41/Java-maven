@@ -13,7 +13,7 @@ pipeline
 	}
 	  environment {
     indev='-dev'
-    def version = sh (script: 'mvn help:evaluate -Dexpression=project.parent.version -q -DforceStdout', returnStdout: true)
+    def version = sh (script: 'mvn help:evaluate -Dexpression=project.parent.artifactId -q -DforceStdout', returnStdout: true)
 
     fin="${version}${indev}"
 	  }
