@@ -11,11 +11,10 @@ pipeline
             args '-v /root/.m2:/root/.m2'
       }
 	}
-	  environment {
-    indev='-dev'
-    def version = sh (script: 'mvn help:evaluate -Dexpression=project.parent.artifactId -q -DforceStdout', returnStdout: true)
-
-    fin="${version}${indev}"
+	environment {
+    POSTFIX='-dev'
+    VERSION = sh (script: 'mvn help:evaluate -Dexpression=project.parent.artifactId -q -DforceStdout', returnStdout: true)
+    ARTIFACT_VERSION="${VERSION}${POSTFIX}"
 	  }
  stages
     {
@@ -28,11 +27,11 @@ pipeline
     stage('Unit Test'){
         steps{
 
-			echo "${env.version}"
+			echo "${env.POSTFIX}"
 		    echo '============================================================================'
-			echo "${env.fin}"
+			echo "${env.VERSION}"
 			echo '============================================================================'
-            echo "${env.indev}"
+            echo "${env.ARTIFACT_VERSION}"
 
 			
         }
