@@ -13,7 +13,7 @@ pipeline
 	}
 	  environment {
     indev='-dev'
-    def version = sh (script: 'mvn help:evaluate -Dexpression=parent.version -q -DforceStdout', returnStdout: true)
+    def version = sh (script: 'mvn help:evaluate -Dexpression=project.parent.version -q -DforceStdout', returnStdout: true)
 
     fin="${version}${indev}"
 	  }
@@ -30,7 +30,7 @@ pipeline
 
 			echo "${env.version}"
 		    echo '============================================================================'
-			echo "${env.version}"
+			echo "${env.fin}"
 			echo '============================================================================'
             echo "${env.indev}"
 
