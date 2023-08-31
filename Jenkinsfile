@@ -30,7 +30,8 @@ pipeline
      }
     stage('Unit Test'){
         steps{
-			env.GRP_ID=sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q',returnStdout: true).trim()
+			// env.GRP_ID = sh(script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q',returnStdout: true).trim()
+			env.GRP_ID = sh(returnStdout: true, script: 'mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q').toString().trim()
 			
 			echo '============================================================================'
 			
