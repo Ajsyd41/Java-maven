@@ -5,17 +5,21 @@
 pipeline
 {
 
-    agent any
-
-    tools{
-
-        maven 'Maven'
-    }
+    agent {
+       docker { 
+           image 'maven:3.9.0'
+            args '-v /root/.m2:/root/.m2'
+      }
+	  }
+	  environment {
+	  GRP_ID='value'
+	  }
     options{
 
         timestamps()
         timeout(time: 20,unit: 'MINUTES')
     }
+	
  stages
     {
      stage('SCM Checkout'){
@@ -26,34 +30,16 @@ pipeline
      }
     stage('Unit Test'){
         steps{
-
-            bat 'mvn test -Dmaven.test.failure.ignore=true'
-            junit '**/target/surefire-reports/TEST-*.xml'
+			env.GRP_ID=sh(script: mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout,returnStdout: true).trim()
+			
+			echo '============================================================================'
+			
+			echo "${env.GRP_ID}"
         }
      }
-      stage('Package') { 
-      steps {
 
-        echo 'Package Appplication...'
-        bat 'mvn clean package -Dmaven.test.skip=true'
 
-      }
-    }
-    //   stage('SonarQube analysis') {
-    //     steps {
-    //        withSonarQubeEnv('sonar-api') {
-    //         //    bat 'mvn clean package'
-    //            bat  'mvn sonar:sonar'
-    //          }
-    //     }
-    //  }
 
-    stage('Deploy to Nexus') { 
-      steps {
-        echo 'Deploy Appplication...'
-        bat 'mvn clean deploy -Dmaven.test.skip=true -Dmaven.install.skip=true'
-      }
-    }
             
 
       }
