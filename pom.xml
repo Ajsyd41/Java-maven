@@ -421,11 +421,17 @@
     </profile>
   </profiles>
 
-<distributionManagement>
-	  	<snapshotRepository>
-     		 <id>nexus-snapshots</id>
-    		 <url>http://nexus-repo.cloudgaurdtechnologies.com:8081/repository/maven-snapshots/</url>
-    	</snapshotRepository>
-</distributionManagement>
+    <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>a0wslj4tcdfva-artifactory-primary-0-releases</name>
+        <url>https://pocadmin.jfrog.io/artifactory/dev-maven</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0wslj4tcdfva-artifactory-primary-0-snapshots</name>
+        <url>https://pocadmin.jfrog.io/artifactory/dev-maven</url>
+    </snapshotRepository>
+    </distributionManagement>
 
 </project>
