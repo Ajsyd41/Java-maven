@@ -12,6 +12,12 @@ pipeline
 
     stage('Maven Build') {
         steps {
+            gitCheckOut.customCheckout()
+        }  
+    }
+
+    stage('Maven Build') {
+        steps {
             mvnBuild()
         }  
     }
