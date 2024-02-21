@@ -13,8 +13,10 @@ pipeline
 
     stage('Pipeline Metadata') {
         steps {
+         script {
             gitCheckOut.customCheckout()
-        }  
+         }
+      }  
     }
 
     stage('Maven Build') {
