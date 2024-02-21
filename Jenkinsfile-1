@@ -18,6 +18,13 @@ pipeline
          }
       }  
     }
+    stage('Install Dependencies'){
+        steps{
+            script{
+                sh 'apk add --update --no-cache maven'
+            }
+        }
+    }
 
     stage('Maven Build') {
         steps {
