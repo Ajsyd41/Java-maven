@@ -1,89 +1,46 @@
+
 pipeline
 {
     agent {
-        label 'kubeagent'
+        docker {
+            image 'ajsyd141/java-python'
+            args '-u 0:0 --privileged --net host -v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
 
- stages
-    {
-    stage('Unit Test')
-     {
-        steps
-        {
-            script
-            {
-                sh 'mvn test -Dmaven.test.failure.ignore=true'
-                junit '**/target/surefire-reports/TEST-*.xml'
+ stages {
+
+    stage('Maven Build') {
+        steps {
+            mvnBuild()
+        }  
+    }
+
+    stage('Unit Test') {
+        steps {
+            mvnTest()
+        }
+     }  
+
+    stage('DockerImage Build') {
+        steps {
+             dockerBuild()
             }
-          
+        }
+         
+    stage('Docker Image Push') {
+        steps {
+            dockerImagePush(credentialsId: 'DockerID', url: 'https://registry.hub.docker.com')
         }
      }
+}
 
-     stage('Maven Build'){
-        steps
-        {
-          
-             sh 'mvn clean package -Dmaven.test.skip=true'   
-            }
-          
-        }
-    // stage('Sonar Analysis')
-    //  {
-    //     steps
-    //     {
-    //         script
-    //         {
-    //          withSonarQubeEnv(credentialsId: 'sonar-api') {
-    //             bat 'mvn sonar:sonar'
-    //         }
-    //     }
-    //  }
-    //  }
-    //  stage("Quality Gate"){
-	//  steps
-	//  {
-    //     timeout(time: 1, unit: 'HOURS') {
-    //      script{
-    //        def qg = waitForQualityGate() 
-    //           if (qg.status != 'OK') {
-    //             error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    //        }
-    //      }
-    //    }
-	//    }
-    //  }
-      stage('DockerImage Build')
-     {
-        steps
-        {
-            script
-            {
-              DockerImage= sh "docker build -f Dockerfile -t ajsyd141/jenk1ns:${BUILD_NUMBER} ."
-                // DockerImage= bat "docker pull hello-world:latest"
-                
-            }
-        }
-     }
-
-    //  stage('Docker Image Push')
-    //  {
-    //     steps
-    //     {
-    //         script
-    //         {
-    //             withDockerRegistry(credentialsId: 'DockerID', url: 'https://registry.hub.docker.com')
-    //             {
-    //              bat "docker push ajsyd141/jenk1ns:${BUILD_NUMBER}"
-    //             }
-    //         }
-    //     }
-    //  }
+post {
+    always {
+        cleanWs()
     }
-    post {
-        always {
-            cleanWs()
-        }
-    }
- }
+}
+ 
+}
 
 
