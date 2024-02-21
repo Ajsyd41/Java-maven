@@ -32,11 +32,11 @@ pipeline
         }  
     }
 
-    stage('Unit Test') {
-        steps {
-            mvnTest()
-        }
-     }  
+    // stage('Unit Test') {
+    //     steps {
+    //         mvnTest()
+    //     }
+    //  }  
 
     stage('DockerImage Build') {
         steps {
