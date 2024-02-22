@@ -1,7 +1,6 @@
 @Library("shared-library") _
 
-pipeline
-{
+pipeline {
     agent {
         docker {
             image 'ajsyd141/java-python'
@@ -18,6 +17,7 @@ pipeline
          }
       }  
     }
+
     stage('Install Dependencies'){
         steps{
             script{
@@ -38,25 +38,36 @@ pipeline
         }
      }  
 
-    stage('DockerImage Build') {
+    stage('SAST') {
         steps {
-             dockerBuild()
-            }
+            mvnSonar()
         }
-         
-    stage('Docker Image Push') {
-        steps {
-            dockerImagePush(credentialsId: 'DockerID', url: 'https://registry.hub.docker.com')
-        }
-     }
-}
+     }  
 
-post {
-    always {
-        cleanWs()
-    }
-}
- 
+    stage('Quality Gate') {
+        steps {
+            mvnSonarQualityGate()
+        }
+     }  
+
+    // stage('DockerImage Build') {
+    //     steps {
+    //          dockerBuild()
+    //         }
+    //     }
+         
+    // stage('Docker Image Push') {
+    //     steps {
+    //         dockerImagePush(credentialsId: 'DockerID', url: 'https://registry.hub.docker.com')
+    //     }
+    //  }
+ }
+
+    post {
+        always {
+            cleanWs()
+        }
+   }
 }
 
 
