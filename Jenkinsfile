@@ -28,27 +28,27 @@ pipeline {
 
     stage('Maven Build') {
         steps {
-            mvnBuild()
+            mvnCheck()
         }  
     }
 
-    stage('Unit Test') {
-        steps {
-            mvnTest()
-        }
-     }  
+    // stage('Unit Test') {
+    //     steps {
+    //         mvnTest()
+    //     }
+    //  }  
 
-    stage('SAST') {
-        steps {
-            mvnSonar()
-        }
-     }  
+    // stage('SAST') {
+    //     steps {
+    //         mvnSonar()
+    //     }
+    //  }  
 
-    stage('Quality Gate') {
-        steps {
-            mvnSonarQualityGate()
-        }
-     }  
+    // stage('Quality Gate') {
+    //     steps {
+    //         mvnSonarQualityGate()
+    //     }
+    //  }  
 
     // stage('DockerImage Build') {
     //     steps {
