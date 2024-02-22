@@ -1,1 +1,1 @@
-project_Name='My-Java_project'
+project_Name='My_Java_project'
