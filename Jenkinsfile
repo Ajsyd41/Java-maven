@@ -50,7 +50,7 @@ pipeline {
     stage('SAST') {
         steps {
             echo "${project_Name}"
-            mvnSonar(project_Name: 'project_Name')
+            mvnSonar(project_Name: "${project_Name}")
         }
      }  
 
