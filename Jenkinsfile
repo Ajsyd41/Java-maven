@@ -46,7 +46,7 @@ pipeline {
 
     stage('SAST') {
         steps {
-            mvnSonar(project_Name: "${}")
+            mvnSonar(project_Name: "${project_Name}")
         }
      }  
 
