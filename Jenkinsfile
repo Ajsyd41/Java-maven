@@ -26,7 +26,7 @@ pipeline {
         }
     }
 
-   stage('Maven Build') {
+   stage('Injecting Environment Variables') {
         steps {
             loadVariables()
         }  
