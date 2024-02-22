@@ -26,6 +26,12 @@ pipeline {
         }
     }
 
+   stage('Maven Build') {
+        steps {
+            loadVariables()
+        }  
+    }
+
     stage('Maven Build') {
         steps {
             mvnCheck()
@@ -38,17 +44,17 @@ pipeline {
     //     }
     //  }  
 
-    // stage('SAST') {
-    //     steps {
-    //         mvnSonar()
-    //     }
-    //  }  
+    stage('SAST') {
+        steps {
+            mvnSonar(project_Name: "${}")
+        }
+     }  
 
-    // stage('Quality Gate') {
-    //     steps {
-    //         mvnSonarQualityGate()
-    //     }
-    //  }  
+    stage('Quality Gate') {
+        steps {
+            mvnSonarQualityGate()
+        }
+     }  
 
     // stage('DockerImage Build') {
     //     steps {
