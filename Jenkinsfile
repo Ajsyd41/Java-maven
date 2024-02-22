@@ -49,8 +49,8 @@ pipeline {
 
     stage('SAST') {
         steps {
-             echo "${project_Name}"
-            mvnSonar(project_Name: "${project_Name}")
+            echo "${project_Name}"
+            mvnSonar(project_Name: 'project_Name')
         }
      }  
 
@@ -74,6 +74,7 @@ pipeline {
  }
 
     post {
+        echo "${project_Name}"
         always {
             cleanWs()
         }
