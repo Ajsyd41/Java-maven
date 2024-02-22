@@ -74,8 +74,10 @@ pipeline {
  }
 
     post {
-        echo "${project_Name}"
+       
         always {
+
+             echo "${project_Name}"
             cleanWs()
         }
    }
