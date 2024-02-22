@@ -28,7 +28,10 @@ pipeline {
 
    stage('Injecting Environment Variables') {
         steps {
+            echo 'loading Variables'
             loadVariables()
+             echo 'Done'
+             echo "${project_Name}"
         }  
     }
 
@@ -46,6 +49,7 @@ pipeline {
 
     stage('SAST') {
         steps {
+             echo "${project_Name}"
             mvnSonar(project_Name: "${project_Name}")
         }
      }  
