@@ -18,6 +18,14 @@ pipeline {
       }  
     }
 
+    stage('Install Dependencies'){
+        steps{
+            script{
+                sh 'apk add --update --no-cache maven aws-cli jq'
+            }
+        }
+    }
+
    stage('Injecting Environment Variables') {
         steps {
             echo 'loading Variables'
@@ -38,13 +46,7 @@ pipeline {
         }  
     }
 
-    // stage('Install Dependencies'){
-    //     steps{
-    //         script{
-    //             sh 'apk add --update --no-cache maven'
-    //         }
-    //     }
-    // }
+
 
     // stage('Maven Build') {
     //     steps {
