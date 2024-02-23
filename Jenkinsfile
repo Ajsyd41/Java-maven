@@ -29,11 +29,11 @@ pipeline {
     stage('calling') {
         steps {
             echo 'Calling configs'
-             secretCall('KEY')
-             secretCall('SECRET_ID')
-             secretCall('SECRET_TOKEN')
-             secretCall('SAST')
-             secretCall('SCA')
+             secretCall(key: "$KEY")
+             secretCall(key: "$SECRET_ID")
+             secretCall(key: "$SECRET_TOKEN")
+             secretCall(key: "$SAST")
+             secretCall(key: "$SCA")
 
         }  
     }
