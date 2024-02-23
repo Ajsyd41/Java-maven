@@ -18,28 +18,39 @@ pipeline {
       }  
     }
 
-    stage('Install Dependencies'){
-        steps{
-            script{
-                sh 'apk add --update --no-cache maven'
-            }
-        }
-    }
-
    stage('Injecting Environment Variables') {
         steps {
             echo 'loading Variables'
-            loadVariables()
+             loadVariables()
              echo 'Done'
-             echo "${project_Name}"
         }  
     }
 
-    stage('Maven Build') {
+    stage('Injecting Environment Variables') {
         steps {
-            mvnCheck()
+            echo 'Calling configs'
+             secretCall('KEY')
+             secretCall('SECRET_ID')
+             secretCall('SECRET_TOKEN')
+             secretCall('SAST')
+             secretCall('SCA')
+
         }  
     }
+
+    // stage('Install Dependencies'){
+    //     steps{
+    //         script{
+    //             sh 'apk add --update --no-cache maven'
+    //         }
+    //     }
+    // }
+
+    // stage('Maven Build') {
+    //     steps {
+    //         mvnCheck()
+    //     }  
+    // }
 
     // stage('Unit Test') {
     //     steps {
@@ -47,18 +58,18 @@ pipeline {
     //     }
     //  }  
 
-    stage('SAST') {
-        steps {
-            echo "${project_Name}"
-            mvnSonar(project_Name: "${project_Name}")
-        }
-     }  
+    // stage('SAST') {
+    //     steps {
+    //         echo "${project_Name}"
+    //         mvnSonar(project_Name: "${project_Name}")
+    //     }
+    //  }  
 
-    stage('Quality Gate') {
-        steps {
-            mvnSonarQualityGate()
-        }
-     }  
+    // stage('Quality Gate') {
+    //     steps {
+    //         mvnSonarQualityGate()
+    //     }
+    //  }  
 
     // stage('DockerImage Build') {
     //     steps {
