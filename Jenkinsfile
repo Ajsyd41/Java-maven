@@ -18,13 +18,13 @@ pipeline {
       }  
     }
 
-    stage('Install Dependencies'){
-        steps{
-            script{
-                sh 'apk add --update --no-cache maven aws-cli jq'
-            }
-        }
-    }
+    // stage('Install Dependencies'){
+    //     steps{
+    //         script{
+    //             sh 'apk add --update --no-cache maven aws-cli jq'
+    //         }
+    //     }
+    // }
 
    stage('Injecting Environment Variables') {
         steps {
@@ -34,17 +34,17 @@ pipeline {
         }  
     }
 
-    stage('calling') {
-        steps {
-            echo 'Calling configs'
-             secretCall(key: "$KEY")
-             secretCall(key: "$SECRET_ID")
-             secretCall(key: "$SECRET_TOKEN")
-             secretCall(key: "$SAST")
-             secretCall(key: "$SCA")
+    // stage('calling') {
+    //     steps {
+    //         echo 'Calling configs'
+    //          secretCall(key: "$KEY")
+    //          secretCall(key: "$SECRET_ID")
+    //          secretCall(key: "$SECRET_TOKEN")
+    //          secretCall(key: "$SAST")
+    //          secretCall(key: "$SCA")
 
-        }  
-    }
+    //     }  
+    // }
 
 
 
