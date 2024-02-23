@@ -26,7 +26,7 @@ pipeline {
         }  
     }
 
-    stage('Injecting Environment Variables') {
+    stage('calling') {
         steps {
             echo 'Calling configs'
              secretCall('KEY')
