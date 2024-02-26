@@ -51,19 +51,17 @@ pipeline {
         }  
     }
 
+    stage('Maven Build') {
+        steps {
+            mvnCheck()
+        }  
+    }
 
-
-    // stage('Maven Build') {
-    //     steps {
-    //         mvnCheck()
-    //     }  
-    // }
-
-    // stage('Unit Test') {
-    //     steps {
-    //         mvnTest()
-    //     }
-    //  }  
+    stage('Unit Test') {
+        steps {
+            mvnTest()
+        }
+     }  
 
     // stage('SAST') {
     //     steps {
