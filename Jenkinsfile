@@ -41,6 +41,16 @@ pipeline {
         }  
     }
 
+    stage('calling variables') {
+        steps {
+            echo "$KEY"
+            echo "$SECRET_KARZA_ID"
+            echo "$SECRET_TOKEN"
+            echo "$SAST"
+            echo "$SCA"
+        }  
+    }
+
 
 
     // stage('Maven Build') {
