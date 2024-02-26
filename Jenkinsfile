@@ -37,12 +37,7 @@ pipeline {
     stage('calling') {
         steps {
             echo 'Calling configs'
-             secretCall(key: "$KEY")
-             secretCall(key: "$SECRET_ID")
-             secretCall(key: "$SECRET_TOKEN")
              secretCall(key: "$SAST")
-             secretCall(key: "$SCA")
-
         }  
     }
 
@@ -87,7 +82,9 @@ pipeline {
  }
 
     post {
-       
+        
+        
+        
         always {
 
              echo "${project_Name}"
