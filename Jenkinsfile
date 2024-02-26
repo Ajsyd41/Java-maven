@@ -2,14 +2,12 @@
 
 pipeline {
 
-agent {
-        
+    agent {     
         docker {
-            dockerAgent()
-    //     //     image 'ajsyd141/java-python'
-    //     //     args '-u 0:0 --privileged --net host -v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2'
-       }
-}
+            image 'ajsyd141/java-python'
+            args '-u 0:0 --privileged --net host -v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2'
+        }
+    }
 
  stages {
 
