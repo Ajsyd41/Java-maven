@@ -2,10 +2,11 @@
 
 pipeline {
     agent {
-        docker {
-            image 'ajsyd141/java-python'
-            args '-u 0:0 --privileged --net host -v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2'
-        }
+        dockerAgent()
+        // docker {
+        //     image 'ajsyd141/java-python'
+        //     args '-u 0:0 --privileged --net host -v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2'
+        // }
     }
 
  stages {
@@ -88,17 +89,12 @@ pipeline {
     //     }
     //  }
  }
-
-    post {
-        
-        
-        
+    post { 
         always {
-
-             echo "${project_Name}"
+            echo "${project_Name}"
             cleanWs()
         }
-   }
+    }
 }
 
 
